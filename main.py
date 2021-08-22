@@ -70,7 +70,7 @@ for day in range(len(calendar)):
                 break
 
 # add the current month
-mainSheet["N3"] = todayDate.strftime('%d/%m/%Y')
+mainSheet["N3"] = lastMonthStart.strftime('%d/%m/%Y')
 mainSheet["N3"].number_format = 'mmm-yy'
 
 # save the new file
