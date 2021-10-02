@@ -9,10 +9,11 @@ cellNames = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N
 
 # work out the dates required for last month
 todayDate = datetime.date.today()
-thisMonthStart = datetime.date(todayDate.year, todayDate.month, 1)
-lastMonthEnd = thisMonthStart - datetime.timedelta(days=1)
+thisMonthStart = datetime.datetime(todayDate.year, todayDate.month, 1, 0, 0, 0, 0)
+lastMonthEnd = (thisMonthStart - datetime.timedelta(days=1)) + datetime.timedelta(hours = 23, minutes=59, seconds=59)
 lastMonthStart = datetime.date(lastMonthEnd.year, lastMonthEnd.month, 1)
 startDate = lastMonthStart - datetime.timedelta(days=1)
+print(lastMonthEnd)
 
 # create array to hold each day
 calendar = []
@@ -40,9 +41,6 @@ for i in range(len(iCal)):
             # store event as new day
             calendar.append(tempList)
 
-for i in calendar:
-    print(i)
-
 # open the blank expenses form
 workbook = openpyxl.load_workbook(
     "C:/Users/aaron/OneDrive - University of Derby/Personal/Work/CB/Expense Claims/Expenses_Form_August_2016 - Blank.xlsx")
@@ -54,6 +52,7 @@ print(len(calendar))
 #got through the days and check each for the summery contents
 for day in range(len(calendar)):
     cellName = cellNames[day + 1]
+    print(f"{calendar[day][0].start.day}, {calendar[day][0].start.month}, {calendar[day][0].start.year}")
     if (day == 0):
         continue
     elif ("Onsite" in calendar[day][0].summary) and ("Onsite" not in calendar[day - 1][0].summary):
@@ -61,11 +60,10 @@ for day in range(len(calendar)):
     elif ("Onsite" in calendar[day][0].summary) and ("Onsite" in calendar[day - 1][0].summary):
         mainSheet[cellName + "8"] = 1
     elif ("Onsite" not in calendar[day][0].summary) and (len(calendar[day]) > 1):
-        print("ping")
         print(calendar[day][0].summary)
         for event in calendar[day]:
-            if ("Travel" in event.summary) or ("travel" in event.summary):
-                print("pong")
+            if ("Travel" in event.summary) or ("travel" in event.summary) or ("TVL" in event.summary) or ("tvl" in event.summary):
+                print(event.summary)
                 mainSheet[cellName + "9"] = 1
                 break
 
@@ -76,4 +74,4 @@ mainSheet["N3"].number_format = 'mmm-yy'
 # save the new file
 workbook.save(
     filename="C:/Users/aaron/OneDrive - University of Derby/Personal/Work/CB/Expense Claims/Expenses_Form_August_2016 - AM" + lastMonthStart.strftime(
-        "%B%Y") + "TEST.xlsx")
+        "%B%Y") + ".xlsx")
