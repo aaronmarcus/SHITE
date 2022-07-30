@@ -43,7 +43,7 @@ for i in range(len(iCal)):
 
 # open the blank expenses form
 workbook = openpyxl.load_workbook(
-    "C:/Users/aaron/OneDrive - Cloudbass/HR/Expense Claims/Expenses_Form_August_2016 - Blank.xlsx")
+    "C:/Users/AaronMarcus/OneDrive - Cloudbass/Documents/HR/Expense Claims/Expenses_Form_August_2016 - Blank.xlsx")
 # set the correct sheet
 mainSheet = workbook['August 2016']
 
@@ -73,6 +73,6 @@ mainSheet["N3"].number_format = 'mmm-yy'
 
 # save the new file
 workbook.save(
-    filename= "C:/Users/aaron/OneDrive - Cloudbass/HR/Expense Claims/" + lastMonthStart.strftime(
+    filename= "C:/Users/AaronMarcus/OneDrive - Cloudbass/Documents/HR/Expense Claims/" + lastMonthStart.strftime(
         "%m") + " - Expenses_Form_August_2016 - AM" + lastMonthStart.strftime(
         "%B%Y") + ".xlsx")
